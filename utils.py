@@ -80,6 +80,7 @@ def register_new_user(email: str, password: str):
     :param
     password: User's password.
     """
+    
     pass
 
 def send_mail_to_admin(mail: str, type: str):

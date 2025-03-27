@@ -3,7 +3,7 @@ test code to check if liveness detection works
 """
 import cv2 #type: ignore
 
-cap = cv2.VideoCapture(0)  # Open webcam
+cap = cv2.VideoCapture(1)  # Open webcam
 
 while True:
     ret, frame = cap.read()
