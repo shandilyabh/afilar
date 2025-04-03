@@ -1,5 +1,5 @@
 """
-Script to test liveness detection on video (Timed for 3 seconds)
+Script to test liveness detection on video
 """
 
 import cv2 # type: ignore
@@ -28,7 +28,7 @@ def liveness_detection(model_dir, device_id=0):
     model_test = AntiSpoofPredict(device_id)
     image_cropper = CropImage()
     
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(0)
     start_time = time.time()
     final_result = "Unknown"
 
@@ -91,7 +91,7 @@ def liveness_detection(model_dir, device_id=0):
 
         cv2.imshow("Liveness Detection", image)
 
-        if time.time() - start_time > 5:
+        if time.time() - start_time > 100:
             break
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
