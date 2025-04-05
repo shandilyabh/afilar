@@ -1,3 +1,10 @@
 livenessDetection/src/__pycache__
 .env
 livenessDetection/src/data_io/__pycache__
+test/hello.py
+test/newrf.py
+test/registerFace.py
+test/user_data.json
+test/usernames.json
+test/facenet.pt
+test/data.json

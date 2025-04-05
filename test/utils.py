@@ -1,6 +1,7 @@
 """
 utility functions for afilar
 """
+
 import firebase_admin # type: ignore
 from firebase_admin import credentials, firestore, storage # type: ignore
 from io import BytesIO # type: ignore
@@ -13,6 +14,7 @@ from datetime import datetime # type: ignore
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import bcrypt # type: ignore
 
 ADMIN_EMAIL = "admin@example.com"
 SMTP_SERVER = "smtp.gmail.com"
@@ -32,6 +34,16 @@ def authenticate_user():
     Authenticate user
     """
     pass
+
+def authenticate_password(username: str, pwd_attempt: str):
+    user_doc = {
+        "hashed_password": "$2b$12$e0Q1v5Z3x4z5J6Y8f7g9Oe1a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5"  # Example hash
+    } # to be replaced by a query to the database to get the hashed password.
+    stored_hash = user_doc["hashed_password"].encode('utf-8')
+    if bcrypt.checkpw(pwd_attempt.encode('utf-8'), stored_hash):
+        return True
+    else:
+        return False
 
 def create_pdf(logs: dict) -> str:
     """

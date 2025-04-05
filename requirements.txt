@@ -6,3 +6,4 @@ torch
 opencv_python
 Pillow
 tensorboardX
+bcrypt

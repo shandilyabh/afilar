@@ -104,6 +104,6 @@ def liveness_detection(model_dir, device_id=0):
     return final_result
 
 if __name__ == "__main__":
-    model_directory = "./resources/anti_spoof_models"
+    model_directory = "./livenessDetection/resources/anti_spoof_models"
     result = liveness_detection(model_directory)
     print("Final Result:", result)
