@@ -13,6 +13,8 @@ import json # type: ignore
 from datetime import datetime # type: ignore
 import smtplib
 from email.mime.text import MIMEText
+import numpy as np
+import faiss # type: ignore
 from email.mime.multipart import MIMEMultipart
 import bcrypt # type: ignore
 
@@ -34,6 +36,15 @@ def authenticate_user():
     Authenticate user
     """
     pass
+
+def retrieve_face_id(faiss_id: int) -> np.ndarray:
+    """
+    Retrieve facenet embeddings from the
+    faiss index based on the faiss ID
+    """
+    index = faiss.read_index("facialEmbeddings.index")
+    embedding = index.reconstruct(faiss_id)
+    return embedding
 
 def authenticate_password(username: str, pwd_attempt: str):
     user_doc = {
