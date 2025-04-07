@@ -1,5 +1,6 @@
 """
-utility functions for afilar
+ideation of functions 
+for afilar
 """
 
 import firebase_admin # type: ignore
@@ -17,12 +18,6 @@ import numpy as np
 import faiss # type: ignore
 from email.mime.multipart import MIMEMultipart
 import bcrypt # type: ignore
-
-ADMIN_EMAIL = "admin@example.com"
-SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 587
-SMTP_USERNAME = "your-email@gmail.com"
-SMTP_PASSWORD = "your-app-password"
 
 # Initializing Firebase
 cred = credentials.Certificate("path/to/your-firebase-adminsdk.json")
@@ -103,35 +98,7 @@ def register_new_user(email: str, password: str):
     :param
     password: User's password.
     """
-    
     pass
-
-def send_mail_to_admin(mail: str, type: str):
-    """
-    Sends an email to the admin.
-    :param mail: The email body content.
-    :param type: "daily" or "alert".
-    """
-    if type not in ["daily", "alert"]:
-        raise ValueError("Invalid email type. Must be 'daily' or 'alert'.")
-
-    subject = "Daily Logs (Report) - AFILAR" if type == "daily" else "Security Alert: Unauthorized Access - AFILAR"
-
-    msg = MIMEMultipart()
-    msg["From"] = SMTP_USERNAME
-    msg["To"] = ADMIN_EMAIL
-    msg["Subject"] = subject
-    msg.attach(MIMEText(mail, "plain"))
-
-    try:
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-        server.starttls()
-        server.login(SMTP_USERNAME, SMTP_PASSWORD)
-        server.sendmail(SMTP_USERNAME, ADMIN_EMAIL, msg.as_string())
-        server.quit()
-        print(f"Email sent to {ADMIN_EMAIL} ({type})")
-    except Exception as e:
-        print(f"Failed to send email: {e}")
 
 def store_instance_in_db(instance: dict, db_name: str):
     """
@@ -148,6 +115,12 @@ def store_instance_in_db(instance: dict, db_name: str):
     except Exception as e:
         print(f"Error storing instance: {e}")
 
+def prepare_faiss_index():
+    """
+    Prepares the faiss index.
+    takes the admin's credentials.
+    """
+    pass
 
 def verify_liveness():
     """

@@ -35,7 +35,3 @@ class Snowflake64:
             self.last_timestamp = ts
             id = ((ts - self.epoch) << 22) | (self.machine_id << 12) | self.sequence
             return id
-        
-gen = Snowflake64(machine_id=1)
-unique_id = gen.generate()
-print(unique_id)

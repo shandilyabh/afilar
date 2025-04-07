@@ -1,0 +1,12 @@
+[
+    {
+        "attempt": "spoof",
+        "percentage": 0.95,
+        "timestamp": "epoch"
+    },
+    {
+        "attempt": "spoof",
+        "percentage": 0.98,
+        "timestamp": "1743962257.066485"
+    }
+]
