@@ -83,10 +83,10 @@ def liveness_detection(device_id:int = 0) -> bool:
                 permission = False
 
                 # to be replaced by logic to log into the database + returning False, for not allowing further access.
-                with open("spoof_attempts_db.json", "r") as db:
+                with open("spoof_attempts.json", "r") as db:
                     logs = json.load(db)
                 logs.append({"attempt": "spoof", "percentage": value, "timestamp": str(time.time())})
-                with open("spoof_attempts_db.json", "w") as db:
+                with open("spoof_attempts.json", "w") as db:
                     json.dump(logs, db, indent=4)
 
                 send_to_slack(

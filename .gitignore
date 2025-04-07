@@ -5,6 +5,7 @@ deprecatedHelpers
 test/user_data.json
 test/usernames.json
 test/.DS_Store
+test/eg_embeddings.json
+test/embeddings.index
+test/spoof_attempts.json
 .DS_Store
-test/example_embeddings.json
-test/facialEmbeddings.index

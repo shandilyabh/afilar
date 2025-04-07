@@ -28,7 +28,7 @@ RIGHT_EYE = [362, 385, 387, 263, 373, 380]
 
 # unique int64 numeric ID generator
 id_generator = Snowflake64(machine_id=1)
-FAISS_INDEX_PATH = Path("faiss1.index")
+FAISS_INDEX_PATH = Path("path/to/faiss_index.index")
 
 def eye_aspect_ratio(landmarks, eye_indices) -> float:
     """
