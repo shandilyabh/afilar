@@ -28,7 +28,9 @@ RIGHT_EYE = [362, 385, 387, 263, 373, 380]
 
 # unique int64 numeric ID generator
 id_generator = Snowflake64(machine_id=1)
-FAISS_INDEX_PATH = Path("path/to/faiss_index.index")
+# FAISS_INDEX_PATH = Path("faiss_index_users.index")
+FAISS_INDEX_PATH = Path("embeddings.index")
+
 
 def eye_aspect_ratio(landmarks, eye_indices) -> float:
     """
@@ -42,7 +44,7 @@ def eye_aspect_ratio(landmarks, eye_indices) -> float:
     return (A + B) / (2.0 * C)
 
 
-def generate_facial_id() -> np.ndarray:
+def generate_facial_id() -> Optional[tuple[np.ndarray, int]]:
     """
     generates facial embeddings of the subject
     returns 512-dimensional numpy array
@@ -101,6 +103,7 @@ def generate_facial_id() -> np.ndarray:
                         
                         embedding = np.asarray(embedding, dtype=np.float32)
                         face_id = embedding.reshape(1, -1)
+                        user_id = id_generator.generate()
 
                         cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
                         cv2.putText(frame, 'facial ID generated', (x1, y1 - 10),
@@ -121,7 +124,7 @@ def generate_facial_id() -> np.ndarray:
 
         cap.release()
         cv2.destroyAllWindows()
-        return face_id
+        return face_id, user_id
 
     except Exception as e:
         print(e)
@@ -203,25 +206,25 @@ def take_username() -> Optional[str]:
         return None
     
 
-def update_faiss_index(face_id: np.ndarray) -> int:
+def update_faiss_index(face_id: np.ndarray, user_id: int) -> None:
     """
     Adds a new face embedding to the FAISS index with a unique 64-bit ID.
     
     Parameters:
         face_id (np.ndarray): The (1, 512) float32 face embedding.
+        user_id: The 64-bit numeric ID assigned to the user.
 
     Returns:
-        int: The 64-bit numeric ID assigned to the user.
+        None
     """
     assert isinstance(face_id, np.ndarray), "face_id must be a numpy array"
     assert face_id.shape == (1, 512), "Expected embedding shape (1, 512)"
     assert face_id.dtype == np.float32, "Embedding must be float32"
 
     index = faiss.read_index(str(FAISS_INDEX_PATH))
-    user_id = id_generator.generate()
     index.add_with_ids(face_id, np.array([user_id], dtype=np.int64))
     faiss.write_index(index, str(FAISS_INDEX_PATH))
-    return user_id
+    return None
 
 
 if __name__ == "__main__":
@@ -235,9 +238,9 @@ if __name__ == "__main__":
                 password_hash = hash_password()
                 if password_hash:
                     try:
-                        face_id = generate_facial_id()
+                        face_id, faiss_id = generate_facial_id()
                         os.system("clear")
-                        faiss_id = update_faiss_index(face_id)
+                        update_faiss_index(face_id, faiss_id)
                         make_user(first_name, last_name, username, password_hash, str(faiss_id))
                         
                         # Arficially inducing delay for aesthetic purposes:

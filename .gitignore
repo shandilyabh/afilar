@@ -8,4 +8,5 @@ test/.DS_Store
 test/eg_embeddings.json
 test/embeddings.index
 test/spoof_attempts.json
+test/users_faiss.index
 .DS_Store
